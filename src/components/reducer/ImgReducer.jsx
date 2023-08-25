@@ -8,7 +8,7 @@ const imgReducer = createSlice({
   reducers: {
     addImage: (state, action) => {
       state.items.push(action.payload)
-      localStorage.setItem('images', JSON.stringify(state.items))
+      localStorage.setItem('images', JSON.stringify(state))
     },
     deleteImage: (state, action) => {
       state.items = state.items.filter((value, index) => index !== action.payload)

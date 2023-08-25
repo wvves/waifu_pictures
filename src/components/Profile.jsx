@@ -6,6 +6,7 @@ import { deleteImage } from './reducer/ImgReducer';
 
 const Profile = () => {
   const imgArray = useSelector(state => state.url)
+  console.log(imgArray)
   const dispatch = useDispatch()
   return (
     <>
