@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import NavBar from './NavBar';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteImage } from './reducer/ImgReducer';
+import { deleteImage, getImages } from './reducer/ImgReducer';
 
 
 const Profile = () => {
   const imgArray = useSelector(state => state.url)
   console.log(imgArray)
   const dispatch = useDispatch()
+  console.log(dispatch(getImages()))
   return (
     <>
     <NavBar></NavBar>

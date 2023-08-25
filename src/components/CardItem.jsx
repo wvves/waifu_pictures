@@ -74,6 +74,7 @@ const CardItem = memo(function CardItem ({ allSelectParams }) {
 
   const imgToProfile = useSelector(state => state.url)
   const dispatch = useDispatch()
+  console.log(imgToProfile)
 
   return (
     <>
