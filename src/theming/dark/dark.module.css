@@ -1,0 +1,9 @@
+.darkTheme {
+  /* background color */
+  --background-color: #242424;
+  --color: #fff;
+  --color-shadow: #000;
+  --button-disabled-border-color: gray;
+  --button-disabled-background-color: rgb(51, 51, 51);
+  --button-disabled-color: rgb(184, 184, 184);
+}

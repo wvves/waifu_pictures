@@ -1,0 +1,9 @@
+.lightTheme {
+ /* background color */
+  --background-color: #ffffff;
+  --color: #000;
+  --color-shadow: #d1d0d0;
+  --button-disabled-border-color: rgb(0, 0, 0, 0.5);
+  --button-disabled-background-color: #f3f3f3;
+  --button-disabled-color: rgba(0, 0, 0, 0.7);
+}
