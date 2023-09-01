@@ -1,14 +1,24 @@
 import React, { memo, useState } from 'react';
 import { useTheme } from './hooks/useTheme';
-import Api from './api/Api';
 import { useFetching } from './hooks/useFetching';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addImage } from './reducer/ImgReducer';
+import { fetchDataImgage } from './reducer/fetchImage/ActionThunk';
+import { useImage } from './context/PreviousImage/useImage';
+
 
 const CardItem = memo(function CardItem ({ allSelectParams }) {
 
-  const { theme } = useTheme()
-  console.log(allSelectParams)
+  // console.log(allSelectParams);
+  const { theme } = useTheme();
+  const dispatch = useDispatch();
+  const {cache, setCache} = useImage();
+ 
+  console.log(cache)
+
+  const [fetchImage, isLoadingImage, errorImage] = useFetching();
+  const apiUrl = 'https://api.waifu.im/search';  // Replace with the actual API endpoint URL
+
   const [urlImage, setUrlImage] = useState({
     "signature": "abac9ffb3f47036c",
     "extension": ".jpeg",
@@ -39,42 +49,36 @@ const CardItem = memo(function CardItem ({ allSelectParams }) {
             "is_nsfw": false
         }
     ]
-})
-  const apiUrl = 'https://api.waifu.im/search';  // Replace with the actual API endpoint URL
+  });
+
   const params = allSelectParams.randomImg === false ? {
     included_tags: allSelectParams.tag,
-    is_nsfw: allSelectParams.isNsfw,
+    // is_nsfw: allSelectParams.isNsfw,
   } 
   :
   {
     order_by: 'RANDOM'
   };
   
-  const [cachePreviousImg, setCachePreviousImg] = useState({})
   const queryParams = new URLSearchParams(params);
   const requestUrl = `${apiUrl}?${queryParams}`;
 
-  const [fetchImage, isLoadingImage, errorImage] = useFetching()
-
   const nextImage = () => {
-    setCachePreviousImg({...cachePreviousImg, [`key${urlImage.image_id}`]: urlImage})
+    setCache(urlImage.image_id, urlImage);
     fetchImage( async () => {
-      const response = await Api.get(requestUrl)
-      console.log('data: ', response.images[0])
+      const response = await dispatch(fetchDataImgage(requestUrl))
+      .unwrap()
+      .then(data => data)
       setUrlImage(response.images[0])
-    })
+    });
   }
 
   const previousImage = () => {
-    const key = Object.keys(cachePreviousImg).pop()
-    console.log(key)
-    setUrlImage(cachePreviousImg[key])
-    delete cachePreviousImg[key]
+    const key = Object.keys(cache).pop();
+    console.log(key);
+    setUrlImage(cache[key]);
+    delete cache[key];
   }
-
-  const imgToProfile = useSelector(state => state.url)
-  const dispatch = useDispatch()
-  console.log(imgToProfile)
 
   return (
     <>
@@ -113,7 +117,7 @@ const CardItem = memo(function CardItem ({ allSelectParams }) {
         <div className='arrows'>
           <div>
             <button 
-              disabled={Object.values(cachePreviousImg).length === 0} 
+              disabled={Object.values(cache).length === 0} 
               onClick={previousImage}>previousImage</button>
           </div>
           <div>

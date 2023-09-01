@@ -31,7 +31,7 @@ const SelectParams = ({ setIsOpen, onSave }) => {
 
   const onsaveParams = () => {
     const saveParams = {
-      isNsfw: isNsfw,
+      // isNsfw: isNsfw,
       randomImg: randomImg,
       tag: tag
     }
@@ -59,13 +59,13 @@ const SelectParams = ({ setIsOpen, onSave }) => {
             <span>random image</span>
         </div>
         <div>
-          <input style={{marginRight: '10px'}} type="checkbox" name='randomWaifu' 
+          {/* <input style={{marginRight: '10px'}} type="checkbox" name='randomWaifu' 
             value={isNsfw} onClick={() => {
               setIsNsfw(!isNsfw)
               setTag('ero')
             }} 
             disabled={randomImg === true}/>
-            <span>18+</span>
+            <span>18+</span> */}
         </div>
         <select 
           name="tag"

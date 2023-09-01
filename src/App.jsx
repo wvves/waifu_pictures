@@ -7,6 +7,7 @@ import Profile from './components/Profile';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import store from './components/reducer/Store';
 import { Provider } from 'react-redux';
+import PreviousImageProvider from './components/context/PreviousImage/PreviousImageProvider';
 
 function App() {
   const [isOpen, setIsOpen] = useState(false)
@@ -20,19 +21,20 @@ function App() {
     setAllSelectParams(params)
   }, [allSelectParams])
 
-  console.log(isOpen)
+  // console.log(isOpen)
   return (
     <>
       
       <div className='App'>
       <BrowserRouter>
       <Provider store={store}>
+        <PreviousImageProvider>
       <Routes>
         <Route path='/profile' element={<Profile/>}/>
         <Route path='*' element={
           <>
           <NavBar></NavBar>
-            <div style={{marginTop: '30px', marginBottom: '10px'}}>
+            <div style={{marginTop: '30px', paddingTop: '30px', marginBottom: '10px'}}>
               <button onClick={() => setIsOpen(true)}>open modal</button>
             </div>
             {isOpen && <div>
@@ -43,6 +45,7 @@ function App() {
           </>
         } />
       </Routes>
+        </PreviousImageProvider>
       </Provider>
       </BrowserRouter>
       </div>
