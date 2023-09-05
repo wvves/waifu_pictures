@@ -24,7 +24,7 @@ const Profile = () => {
         {imgArray.items.map((item, index) => (
           <div key={index} className='content-item'>
             <a href={item.url}>{item.id}</a>
-            <div onClick={() => dispatch(deleteImage(index))}>deleteItem</div>
+            <div onClick={() => dispatch(deleteImage(index))} style={{color: '#ff3434', cursor: 'pointer'}}>delete item</div>
           </div>
         ))
         }

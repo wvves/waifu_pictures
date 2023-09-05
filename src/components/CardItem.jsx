@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { useTheme } from './hooks/useTheme';
 import { useFetching } from './hooks/useFetching';
 import { useDispatch } from 'react-redux';
@@ -12,7 +12,7 @@ const CardItem = memo(function CardItem ({ allSelectParams }) {
   // console.log(allSelectParams);
   const { theme } = useTheme();
   const dispatch = useDispatch();
-  const {cache, setCache} = useImage();
+  const {cache, setCache, lengthCache} = useImage();
  
   console.log(cache)
 
@@ -50,7 +50,15 @@ const CardItem = memo(function CardItem ({ allSelectParams }) {
         }
     ]
   });
-
+  useEffect(() => {
+    if(cache.length > 0) {
+      const key = cache.pop()
+      console.log(cache)
+      console.log('key = ',key)
+      console.log('Object keys: ', Object.values(key))
+      setUrlImage(Object.values(key)[Object.values(key).length - 1])
+    }
+  }, [])
   const params = allSelectParams.randomImg === false ? {
     included_tags: allSelectParams.tag,
     // is_nsfw: allSelectParams.isNsfw,
@@ -64,20 +72,21 @@ const CardItem = memo(function CardItem ({ allSelectParams }) {
   const requestUrl = `${apiUrl}?${queryParams}`;
 
   const nextImage = () => {
-    setCache(urlImage.image_id, urlImage);
+    
     fetchImage( async () => {
       const response = await dispatch(fetchDataImgage(requestUrl))
       .unwrap()
       .then(data => data)
       setUrlImage(response.images[0])
+      setCache(response.images[0].image_id, response.images[0]);
     });
+    
   }
 
   const previousImage = () => {
-    const key = Object.keys(cache).pop();
+    const key = cache.pop();
     console.log(key);
-    setUrlImage(cache[key]);
-    delete cache[key];
+    setUrlImage(Object.values(key).pop());
   }
 
   return (
@@ -117,7 +126,7 @@ const CardItem = memo(function CardItem ({ allSelectParams }) {
         <div className='arrows'>
           <div>
             <button 
-              disabled={Object.values(cache).length === 0} 
+              disabled={cache.length <= 0} 
               onClick={previousImage}>previousImage</button>
           </div>
           <div>
