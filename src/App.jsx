@@ -8,11 +8,12 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import store from './components/reducer/Store';
 import { Provider } from 'react-redux';
 import PreviousImageProvider from './components/context/PreviousImage/PreviousImageProvider';
+import LoginPage from './components/LoginPage';
 
 function App() {
   const [isOpen, setIsOpen] = useState(false)
   const [allSelectParams, setAllSelectParams] = useState({
-    isNsfw: false,
+    // isNsfw: false,
     randomImg: false,
     tag: 'waifu'
   })
@@ -31,9 +32,10 @@ function App() {
         <PreviousImageProvider>
       <Routes>
         <Route path='/profile' element={<Profile/>}/>
+        <Route path='/login-page' element={<LoginPage/>}/>
         <Route path='*' element={
           <>
-          <NavBar></NavBar>
+          <NavBar />
             <div style={{marginTop: '30px', paddingTop: '30px', marginBottom: '10px'}}>
               <button onClick={() => setIsOpen(true)}>open modal</button>
             </div>

@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchDataImgage } from "./fetchImage/ActionThunk";
 
 const imgReducer = createSlice({
   name: 'images',
@@ -11,7 +10,6 @@ const imgReducer = createSlice({
       state.items = state.items.filter(item => item.id !== action.payload.id)
       state.items.push(action.payload)
       // localStorage.setItem('images', JSON.stringify(state))
-      
     },
     deleteImage: (state, action) => {
       state.items = state.items.filter((_, index) => index !== action.payload)

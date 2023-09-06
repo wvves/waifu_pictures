@@ -2,8 +2,8 @@ import React, { memo, useEffect, useState } from 'react';
 import { useTheme } from './hooks/useTheme';
 import { useFetching } from './hooks/useFetching';
 import { useDispatch } from 'react-redux';
-import { addImage } from './reducer/ImgReducer';
-import { fetchDataImgage } from './reducer/fetchImage/ActionThunk';
+import { addImage } from './reducer/imageReducer/ImgReducer';
+import { fetchDataImgage } from './reducer/imageReducer/fetchThunk/ActionThunk';
 import { useImage } from './context/PreviousImage/useImage';
 
 
@@ -13,7 +13,7 @@ const CardItem = memo(function CardItem ({ allSelectParams }) {
   const { theme } = useTheme();
   const dispatch = useDispatch();
   const {cache, setCache, lengthCache} = useImage();
- 
+
   console.log(cache)
 
   const [fetchImage, isLoadingImage, errorImage] = useFetching();
