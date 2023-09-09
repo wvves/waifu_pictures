@@ -7,14 +7,12 @@ import { fetchDataImgage } from './reducer/imageReducer/fetchThunk/ActionThunk';
 import { useImage } from './context/PreviousImage/useImage';
 
 
-const CardItem = memo(function CardItem ({ allSelectParams }) {
+const CardItem = function CardItem ({ allSelectParams }) {
 
   // console.log(allSelectParams);
   const { theme } = useTheme();
   const dispatch = useDispatch();
-  const {cache, setCache, lengthCache} = useImage();
-
-  console.log(cache)
+  const {previousImages, setPreviousImg } = useImage();
 
   const [fetchImage, isLoadingImage, errorImage] = useFetching();
   const apiUrl = 'https://api.waifu.im/search';  // Replace with the actual API endpoint URL
@@ -51,11 +49,9 @@ const CardItem = memo(function CardItem ({ allSelectParams }) {
     ]
   });
   useEffect(() => {
-    if(cache.length > 0) {
-      const key = cache.pop()
-      console.log(cache)
-      console.log('key = ',key)
-      console.log('Object keys: ', Object.values(key))
+    if(previousImages.length > 0) {
+      const key = previousImages.pop()
+      console.log(key)
       setUrlImage(Object.values(key)[Object.values(key).length - 1])
     }
   }, [])
@@ -78,15 +74,15 @@ const CardItem = memo(function CardItem ({ allSelectParams }) {
       .unwrap()
       .then(data => data)
       setUrlImage(response.images[0])
-      setCache(response.images[0].image_id, response.images[0]);
+      // setPreviousImg(response.images[0].image_id, response.images[0]);
     });
-    
+    setPreviousImg(urlImage.image_id, urlImage);
   }
 
   const previousImage = () => {
-    const key = cache.pop();
+    const key = previousImages.pop();
     console.log(key);
-    setUrlImage(Object.values(key).pop());
+    setUrlImage(Object.values(key)[Object.values(key).length - 1]);
   }
 
   return (
@@ -126,7 +122,7 @@ const CardItem = memo(function CardItem ({ allSelectParams }) {
         <div className='arrows'>
           <div>
             <button 
-              disabled={cache.length <= 0} 
+              disabled={previousImages.length === 0} 
               onClick={previousImage}>previousImage</button>
           </div>
           <div>
@@ -138,6 +134,6 @@ const CardItem = memo(function CardItem ({ allSelectParams }) {
         </div>
     </>
   );
-})
+}
 
 export default CardItem;

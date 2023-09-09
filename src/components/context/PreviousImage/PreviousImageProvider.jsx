@@ -3,13 +3,13 @@ import { PreviousImageContext } from './PreviousImageContext';
 
 
 const PreviousImageProvider = ({ children }) => {
-  const [cachePreviousImg, setCachePreviousImg] = useState([]);
-  const setCacheImg = (image_id, urlImage) => {
-    setCachePreviousImg([...cachePreviousImg, {[image_id]: urlImage}])
+  const [previousImages, setPreviousImgages] = useState([]);
+  const setPreviousImg = (image_id, urlImage) => {
+    setPreviousImgages([...previousImages, {[image_id]: urlImage}])
   }
 
   const value = useMemo(() => ({
-    cache: cachePreviousImg, setCache: setCacheImg}), [cachePreviousImg]);
+    previousImages: previousImages, setPreviousImg: setPreviousImg}), [previousImages]);
   // console.log(value)
   return (
     <PreviousImageContext.Provider value={value}>
