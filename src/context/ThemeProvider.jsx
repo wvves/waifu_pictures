@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { ThemeContext } from './ThemeContext';
-import darkTheme from '../../theming/dark/dark.module.css';
-import lightTheme from '../../theming/light/light.module.css';
+import darkTheme from '../theming/dark/dark.module.css';
+import lightTheme from '../theming/light/light.module.css';
 
 const ThemeProvider = ({ children }) => {
   const [currentTheme, setCurrentTheme] = useState(localStorage.getItem('theme'))

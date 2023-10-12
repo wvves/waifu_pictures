@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import NavBar from './NavBar';
+import NavBar from '../components/NavBar';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteImage } from './reducer/imageReducer/ImgReducer';
+import { deleteImage } from '../reducer/imageReducer/ImgReducer';
 
 
 const Profile = () => {

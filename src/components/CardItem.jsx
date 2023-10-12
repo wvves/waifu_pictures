@@ -1,10 +1,10 @@
 import React, { memo, useEffect, useState } from 'react';
-import { useTheme } from './hooks/useTheme';
-import { useFetching } from './hooks/useFetching';
+import { useTheme } from '../utils/hooks/useTheme';
+import { useFetching } from '../utils/hooks/useFetching';
 import { useDispatch } from 'react-redux';
-import { addImage } from './reducer/imageReducer/ImgReducer';
-import { fetchDataImgage } from './reducer/imageReducer/fetchThunk/ActionThunk';
-import { useImage } from './context/PreviousImage/useImage';
+import { addImage } from '../reducer/imageReducer/ImgReducer';
+import { fetchDataImgage } from '../reducer/imageReducer/fetchThunk/ActionThunk';
+import { useImage } from '../context/PreviousImage/useImage';
 
 
 const CardItem = function CardItem ({ allSelectParams }) {

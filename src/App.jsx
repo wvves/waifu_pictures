@@ -3,12 +3,12 @@ import React, { useCallback, useState } from 'react'
 import CardItem from './components/CardItem';
 import NavBar from './components/NavBar';
 import SelectParams from './components/SelectParams';
-import Profile from './components/Profile';
+import Profile from './pages/Profile';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import store from './components/reducer/Store';
+import store from './reducer/store';
 import { Provider } from 'react-redux';
-import PreviousImageProvider from './components/context/PreviousImage/PreviousImageProvider';
-import LoginPage from './components/LoginPage';
+import PreviousImageProvider from './context/PreviousImage/PreviousImageProvider';
+import LoginPage from './pages/LoginPage';
 
 function App() {
   const [isOpen, setIsOpen] = useState(false)

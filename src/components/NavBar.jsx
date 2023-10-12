@@ -1,7 +1,7 @@
 
 import { FormControlLabel, Switch } from '@mui/material';
 import React from 'react';
-import { useTheme } from './hooks/useTheme';
+import { useTheme } from '../utils/hooks/useTheme';
 import { useHref, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 

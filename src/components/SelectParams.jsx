@@ -1,33 +1,14 @@
 import React, { useState } from 'react';
-
-const versatile = [
-  'waifu',
-  'maid',
-  'marin-kitagawa',
-  'mori-calliope',
-  'raiden-shogun',
-  'oppai',
-  'selfies',
-  'uniform',
-]
-
-const nsfw = [
-  'ero',
-  'ass',
-  'hentai',
-  'milf',
-  'oral',
-  'paizuri',
-  'ecchi',
-]
+import { nsfw, versatile } from '../utils/constants/params';
 
 const SelectParams = ({ setIsOpen, onSave }) => {
-  const [isNsfw, setIsNsfw] = useState(false)
+  // const [isNsfw, setIsNsfw] = useState(false)
   const [randomImg, setRandomImg] = useState(false)
   const [tag, setTag] = useState('waifu')
-  console.log('18+', isNsfw)
-  console.log('tags', tag)
-  console.log('random', randomImg)
+
+  // console.log('18+', isNsfw)
+  // console.log('tags', tag)
+  // console.log('random', randomImg)
 
   const onsaveParams = () => {
     const saveParams = {
@@ -72,12 +53,14 @@ const SelectParams = ({ setIsOpen, onSave }) => {
           value={tag}
           onChange={(e) => setTag(e.target.value)}
           disabled={randomImg === true}>
-            {isNsfw 
+            {/* {isNsfw 
             ? 
             nsfw.map(item => 
               <option key={item} value={item}>{item}</option>)
             :
             versatile.map(item => 
+              <option key={item} value={item}>{item}</option>)} */}
+            {versatile.map(item => 
               <option key={item} value={item}>{item}</option>)}
         </select>
         <div className='close'

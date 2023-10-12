@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUser } from './reducer/authReducer/AuthActionThunk';
-import NavBar from './NavBar';
+import { fetchUser } from '../reducer/authReducer/AuthActionThunk';
+import NavBar from '../components/NavBar';
 
 
 const LoginPage = () => {
