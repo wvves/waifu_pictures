@@ -5,7 +5,8 @@ import { useDispatch } from 'react-redux';
 import { addImage } from '../reducer/imageReducer/ImgReducer';
 import { fetchDataImgage } from '../reducer/imageReducer/fetchThunk/ActionThunk';
 import { useImage } from '../context/PreviousImage/useImage';
-
+import { preview_image } from '../utils/constants/previewImage';
+import { NavLink } from 'react-router-dom';
 
 const CardItem = function CardItem ({ allSelectParams }) {
 
@@ -17,42 +18,12 @@ const CardItem = function CardItem ({ allSelectParams }) {
   const [fetchImage, isLoadingImage, errorImage] = useFetching();
   const apiUrl = 'https://api.waifu.im/search';  // Replace with the actual API endpoint URL
 
-  const [urlImage, setUrlImage] = useState({
-    "signature": "abac9ffb3f47036c",
-    "extension": ".jpeg",
-    "image_id": 6616,
-    "favorites": 6,
-    "dominant_color": "#cac0c6",
-    "source": "https://reddit.com/i7qogy/",
-    "artist": null,
-    "uploaded_at": "2021-11-02T12:16:19.048684+01:00",
-    "liked_at": null,
-    "is_nsfw": false,
-    "width": 1152,
-    "height": 2000,
-    "byte_size": 1003579,
-    "url": "https://cdn.waifu.im/6616.jpeg",
-    "preview_url": "https://www.waifu.im/preview/6616/",
-    "tags": [
-        {
-            "tag_id": 12,
-            "name": "waifu",
-            "description": "A female anime/manga character.",
-            "is_nsfw": false
-        },
-        {
-            "tag_id": 13,
-            "name": "maid",
-            "description": "Cute womans or girl employed to do domestic work in their working uniform.",
-            "is_nsfw": false
-        }
-    ]
-  });
+  const [urlImage, setUrlImage] = useState(preview_image);
   useEffect(() => {
-    if(previousImages.length > 0) {
-      const key = previousImages.pop()
-      console.log(key)
-      setUrlImage(Object.values(key)[Object.values(key).length - 1])
+    if(previousImages.length >= 1) {
+      setUrlImage(Object.values(previousImages[Object.values(previousImages).length - 1])[0]);
+    } else {
+      setPreviousImg(urlImage.image_id, urlImage);
     }
   }, [])
   const params = allSelectParams.randomImg === false ? {
@@ -74,15 +45,14 @@ const CardItem = function CardItem ({ allSelectParams }) {
       .unwrap()
       .then(data => data)
       setUrlImage(response.images[0])
-      // setPreviousImg(response.images[0].image_id, response.images[0]);
+      setPreviousImg(response.images[0].image_id, response.images[0]);
     });
-    setPreviousImg(urlImage.image_id, urlImage);
   }
 
   const previousImage = () => {
-    const key = previousImages.pop();
-    console.log(key);
-    setUrlImage(Object.values(key)[Object.values(key).length - 1]);
+    previousImages.pop();
+    const key = Object.values(previousImages[Object.values(previousImages).length - 1])[0];
+    setUrlImage(key);
   }
 
   return (
@@ -105,24 +75,23 @@ const CardItem = function CardItem ({ allSelectParams }) {
               ))
             }
         </div>
-        <div>
-          <span>img source:&nbsp;</span>
-          <a href={urlImage.source}>{urlImage.source}</a>
+        <div className='card-src'>
+          <div>img source:&nbsp;</div>
+          <NavLink style={() => {
+            return {
+              color: !urlImage.source && 'red',
+              cursor: 'default',
+              display: 'block',
+              fontSize: (urlImage.source.length > 40 ? '.7em' : '1em')
+            }
+          }} to={urlImage.source}>{urlImage.source || 'not src'}</NavLink>
         </div>
-        {/* <div className='card-buttons'>
-          <div>didn't like: 0</div>
-          <div>liked: 0</div>
-        </div> */}
       </div>
       }
-      {/* <div className='separator'>
-          <span></span>
-          <span></span>
-        </div> */}
         <div className='arrows'>
           <div>
             <button 
-              disabled={previousImages.length === 0} 
+              disabled={previousImages.length === 1} 
               onClick={previousImage}>previousImage</button>
           </div>
           <div>

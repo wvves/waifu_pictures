@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import NavBar from '../components/NavBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteImage } from '../reducer/imageReducer/ImgReducer';
+import { Link } from 'react-router-dom';
 
 
 const Profile = () => {
   const imgArray = useSelector(state => state.url)
+  const { auth, entities } = useSelector((state) => state.auth)
   console.log(imgArray)
   const dispatch = useDispatch()
   return (
@@ -15,7 +17,10 @@ const Profile = () => {
 
     <div className='profile-block'>
       <div>profile</div>
-      <div>name</div>
+      <div>
+        <span>name: </span>
+        {auth ? entities.name + entities.emoji: 'unknown'}
+      </div>
     </div>
     <div className='content-block'>
       <div>content</div>
@@ -23,8 +28,9 @@ const Profile = () => {
       <div className='content-wrap'>
         {imgArray.items.map((item, index) => (
           <div key={index} className='content-item'>
-            <a href={item.url}>{item.id}</a>
-            <div onClick={() => dispatch(deleteImage(index))} style={{color: '#ff3434', cursor: 'pointer'}}>delete item</div>
+            <Link target='_blank' rel='noopener noreferrer' to={item.url}>{item.id}</Link>
+            <div onClick={() => dispatch(deleteImage(index))} 
+              style={{color: '#ff3434', cursor: 'pointer'}}>delete item</div>
           </div>
         ))
         }
